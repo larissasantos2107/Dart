@@ -4,7 +4,6 @@ void main(){
 
   double multa = 0;
   double valor = 0;
-  double desconto = 0;
   double parcela = 0;
 
   print("Informe seu nome: ");

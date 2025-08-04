@@ -2,7 +2,6 @@ import 'dart:io';
 
 void main() {
 
-  int desconto = 0;
 
   print("===================== Bem - Vindo ao Super Mercado Divas =====================\n");
 
@@ -83,7 +82,7 @@ void main() {
     print("Opção invalida");
     break;
   }
-  }while(op == null);
+  }while(op == Null);
 }
 
 
