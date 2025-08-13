@@ -1,5 +1,7 @@
 import 'dart:io';
 
+// if e else
+
 void main(){
 
   print("digite a primeira nota: ");

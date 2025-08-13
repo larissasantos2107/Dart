@@ -1,5 +1,7 @@
 import 'dart:io';
 
+// Switch
+
 void main(){
 
   double multa = 0;

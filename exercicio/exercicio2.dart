@@ -1,5 +1,7 @@
 import 'dart:io';
 
+// if, else if e else
+
 void main() {
   print("Digite seu nome: ");
   String? nome = stdin.readLineSync();
