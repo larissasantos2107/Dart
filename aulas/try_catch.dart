@@ -31,12 +31,12 @@ import 'dart:io';
 
 // }
 
-void main(){
-  List<int> lista = [1,2,3];
+// void main(){
+//   List<int> lista = [1,2,3];
 
-  try{
-    print(lista[5]);
-  }on RangeError{
-    print("Imprima somente valores que estão no index da lista");
-  }
-}
+//   try{
+//     print(lista[5]);
+//   }on RangeError{
+//     print("Imprima somente valores que estão no index da lista");
+//   }
+// }
