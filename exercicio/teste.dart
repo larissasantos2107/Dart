@@ -84,30 +84,34 @@ void main() {
         }
 
         if (prodIndex > 0 && prodIndex <= produtos.length) {
-          stdout.write("Informe a quantidade: ");
-          String? qtdStr = stdin.readLineSync();
           int qtd = 0;
+          bool qtdValida = false;
 
-          try {
-            qtd = int.parse(qtdStr!);
-          } catch (e) {
-            print("❌ Quantidade inválida!");
-            continue;
+          while (!qtdValida) {
+            stdout.write("Informe a quantidade: ");
+            String? qtdStr = stdin.readLineSync();
+
+            try {
+              qtd = int.parse(qtdStr!);
+              if (qtd <= 0) {
+                print("❌ Quantidade inválida! Deve ser maior que zero.");
+              } else if (qtd > produtos[prodIndex - 1]["estoque"]) {
+                print("❌ Estoque insuficiente! Digite uma quantidade válida.");
+              } else {
+                qtdValida = true; // quantidade correta
+              }
+            } catch (e) {
+              print("❌ Quantidade inválida! Digite apenas números.");
+            }
           }
 
-          if (qtd <= 0) {
-            print("❌ Quantidade inválida!");
-          } else if (qtd > produtos[prodIndex - 1]["estoque"]) {
-            print("❌ Estoque insuficiente!");
-          } else {
-            produtos[prodIndex - 1]["estoque"] -= qtd;
-            carrinho.add({
-              "nome": produtos[prodIndex - 1]["nome"],
-              "preco": produtos[prodIndex - 1]["preco"],
-              "qtd": qtd
-            });
-            print("✅ Produto adicionado ao carrinho!");
-          }
+          produtos[prodIndex - 1]["estoque"] -= qtd;
+          carrinho.add({
+            "nome": produtos[prodIndex - 1]["nome"],
+            "preco": produtos[prodIndex - 1]["preco"],
+            "qtd": qtd
+          });
+          print("✅ Produto adicionado ao carrinho!");
         }
       } else if (opcao == 2) {
         if (carrinho.isEmpty) {
@@ -158,6 +162,21 @@ void main() {
 
     print("\nSubtotal: R\$${subtotal}");
 
+    // Perguntar aniversário
+    stdout.write("\nDigite o dia do seu aniversário (1-31): ");
+    int diaAniversario = int.parse(stdin.readLineSync() ?? "0");
+
+    stdout.write("Digite o mês do seu aniversário (1-12): ");
+    int mesAniversario = int.parse(stdin.readLineSync() ?? "0");
+
+    DateTime hoje = DateTime.now();
+    bool descontoAniversario = false;
+    if (diaAniversario == hoje.day && mesAniversario == hoje.month) {
+      print("🎉 Feliz Aniversário! Você ganhou 10% de desconto!");
+      subtotal *= 0.9;
+      descontoAniversario = true;
+    }
+
     // Escolha de pagamento
     print("\nFormas de pagamento:");
     print("1 - Dinheiro (10% desconto)");
@@ -172,16 +191,16 @@ void main() {
     double total = subtotal;
     switch (pg) {
       case 1:
-        total = subtotal * 0.9;
+        total *= 0.9;
         break;
       case 2:
         total = subtotal;
         break;
       case 3:
-        total = subtotal * 1.1;
+        total *= 1.1;
         break;
       case 4:
-        total = subtotal * 0.95;
+        total *= 0.95;
         break;
       default:
         print("Opção inválida, mantendo valor original.");
@@ -221,6 +240,9 @@ void main() {
     carrinho.forEach((item) {
       print("${item["nome"]} - ${item["qtd"]}x R\$${item["preco"]} = R\$${item["preco"] * item["qtd"]}");
     });
+    if (descontoAniversario) {
+      print("Desconto de Aniversário: 10% aplicado!");
+    }
     print("Subtotal: R\$${subtotal}");
     print("Total a pagar: R\$${total}");
     if (pg == 1) {
